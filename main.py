@@ -13,11 +13,9 @@ print("Waiting for message...")
 
 window = 1
 def motion():
-    print("Motion detected by PIR sensor\n-")
-
+    return
     global window
     if window > 1:
-        print(window)
         window -= 1
         return
     window += 1
@@ -39,8 +37,7 @@ def motion():
 
 def sound():
     # 컴퓨터에 저장되어 있는 녹음된 소리 재생
-    print("Playing sound")
-    sound_path = r"C:\Users\choiy\Desktop\meow.wav"
+    sound_path = r"C:\Users\choiy\Desktop\answer.mp3"
     playsound.playsound(sound_path)
 
 def button(data):
@@ -59,8 +56,11 @@ while True:
     if ser.in_waiting > 0:
         data = ser.readline().decode().strip()
         if data == "Motion Detected":
+            print(data)
             motion()
         if data == "Sound Detected":
+            print(data)
             sound()
-        if data in ("W", " ", "A", "S", "D"):
+        if data in ("W", "A", "S", "D"):
+            print(f'{data} Key Pressed')
             button(data)
