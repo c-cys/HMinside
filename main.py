@@ -21,7 +21,7 @@ def motion():
     window += 1
 
     # 이미지 경로 설정 및 로드
-    image_path = r"C:\Users\choiy\Desktop\studying.png"
+    image_path = "src/studying.png"
     image = cv2.imread(image_path)
 
     # OpenCV 창 설정 및 이미지 표시
@@ -37,7 +37,7 @@ def motion():
 
 def sound():
     # 컴퓨터에 저장되어 있는 녹음된 소리 재생
-    sound_path = r"C:\Users\choiy\Desktop\answer.mp3"
+    sound_path = "src/answer.mp3"
     playsound.playsound(sound_path)
 
 def button(data):

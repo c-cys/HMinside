@@ -9,14 +9,17 @@ SOUND_THRESHOLD = 50  # 소리 감지 임계값 설정
 
 keypad = pin1
 keypad.set_pull(keypad.PULL_UP)
+button_list = [0, 110, 200, 275, 755];
+plusminus = 10
 button_values = {
-    'A': (0, 5),
-    'B': (65, 75),
-    'C': (120, 140),
-    'D': (175, 185),
-    'E': (640, 645)
+    'A': (button_list[0] - plusminus, button_list[0] + plusminus),
+    'B': (button_list[1] - plusminus, button_list[1] + plusminus),
+    'C': (button_list[2] - plusminus, button_list[2] + plusminus),
+    'D': (button_list[3] - plusminus, button_list[3] + plusminus),
+    'E': (button_list[4] - plusminus, button_list[4] + plusminus),
 }
 
+motor = pin16
 spinned = 0
 
 while True:
@@ -36,11 +39,9 @@ while True:
         sound_detected = True  # 감지 상태로 설정하여 반복 전송 방지
         utime.sleep(1)
 
-    utime.sleep(0.5)  # 상태 체크 간격 설정
-
     """ Keypad """
     key = keypad.read_analog()  # 아날로그 값 읽기
-
+    print(key)
     # 각 버튼의 값을 체크하고 시리얼 통신 전송
     if button_values['A'][0] <= key <= button_values['A'][1]:
         uart.write('W\n')
@@ -48,8 +49,8 @@ while True:
     elif button_values['B'][0] <= key <= button_values['B'][1]:
         spinned = 1 - spinned
         utime.sleep(1)
-        pin16.write_digital(spinned)
-        pin16.write_analog(800 * spinned)
+        motor.write_digital(spinned)
+        motor.write_analog(800 * spinned)
         display.clear()
     elif button_values['C'][0] <= key <= button_values['C'][1]:
         uart.write('A\n')
